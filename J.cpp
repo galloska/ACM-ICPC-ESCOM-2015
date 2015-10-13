@@ -46,8 +46,8 @@ void Iniciar(int n){
     pot[0] = 1;
     for(int i=1;i<=n;i++)
         pot[i] = ( pot[i-1] * (n+1) ) % MOD; 
-	
-	up.clear();
+    
+    up.clear();
     down.clear();
     res.clear();
 
@@ -55,57 +55,57 @@ void Iniciar(int n){
         estado[i] = false;
         down.insert(i);
         valid[i] = true;
-    }	
+    }   
 }
 
 int main(){
     Pre(10001);
 
-	int t,n,k,a;
+    int t,n,k,a;
     int num,aux;
     set<int> :: iterator it;
 
-	scanf("%d",&t);
+    scanf("%d",&t);
 
-	for(int u=1;u<=t;u++){
-		scanf("%d %d",&n,&k);
+    for(int u=1;u<=t;u++){
+        scanf("%d %d",&n,&k);
 
-        Iniciar(n);	
+        Iniciar(n); 
 
-		for(int i=0;i<k;i++){
-			scanf("%d",&a);
-			estado[a] = true;
-			up.insert(a);
+        for(int i=0;i<k;i++){
+            scanf("%d",&a);
+            estado[a] = true;
+            up.insert(a);
             down.erase(a);
-		}
-		
-		int turno = 0;
-		
-		while(n){
-			if(!up.size() && !turno){
+        }
+        
+        int turno = 0;
+        
+        while(n){
+            if(!up.size() && !turno){
                 it = down.end();
-				it--;
-				int num = *it;
-				down.erase(num);
+                it--;
+                int num = *it;
+                down.erase(num);
                 up.insert(num);
-			}
+            }
             else if(!up.size()){
                 it = down.lower_bound(0);
-				int num = *it;
-				down.erase(num);
+                int num = *it;
+                down.erase(num);
                 up.insert(num);
-			}
+            }
 
             used.reset();
 
-			if(!turno){
-				it = up.end();
-				it--;
-				num = aux = *it;
-			}
-			else{
-				it = up.lower_bound(0);
-				num = aux = *it;
+            if(!turno){
+                it = up.end();
+                it--;
+                num = aux = *it;
+            }
+            else{
+                it = up.lower_bound(0);
+                num = aux = *it;
             }
 
             valid[num] = false;
@@ -131,17 +131,17 @@ int main(){
                     }
                 }
             }
-			res.push_back(aux);
+            res.push_back(aux);
 
             turno = 1 - turno;
             n--;
-		}
+        }
 
         lli fin = 0;
         for(int i=res.size()-1;i>=0;i--)
             fin =( fin + res[i] * pot[res.size()-i-1] ) % MOD;
-		
-		printf("Case #%d: %lld\n",u,fin);
-	}
-	return 0;
+        
+        printf("Case #%d: %lld\n",u,fin);
+    }
+    return 0;
 }
